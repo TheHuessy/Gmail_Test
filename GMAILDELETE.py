@@ -53,26 +53,26 @@ print("READING IN TOKEN")
 creds = os.environ['Token']
 creds = json.loads(creds)
 #creds = json.loads('{"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "client_id": "276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "client_secret": "T4Nbt7shAsgx18mzhvj5buTa", "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "token_expiry": "2019-01-14T19:30:21Z", "token_uri": "https://www.googleapis.com/oauth2/v3/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "expires_in": 3600, "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "scope": "https://mail.google.com/", "token_type": "Bearer"}, "scopes": ["https://mail.google.com/"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"}')
-print(type(creds))
-print('++++++++++')
+#print(type(creds))
+#print('++++++++++')
 cr = os.environ['Credentials']
 cr = json.loads(cr)
-print(type(cr))
+#print(type(cr))
 #Checking to make sure that the thing exists, if not, it prompts you to create it
 #if not creds or creds.invalid:
-#if not creds:
-#    print("NEED TO CHECK CREDENTIALS")
-#    #flow = client.flow_from_clientsecrets(os.environ['Credentials'], SCOPES)
-#    flow = client.flow_from_clientsecrets(cr, SCOPES)
-#    creds = tools.run_flow(flow, store)
+if not creds:
+    print("NEED TO CHECK CREDENTIALS")
+    #flow = client.flow_from_clientsecrets(os.environ['Credentials'], SCOPES)
+    flow = client.flow_from_clientsecrets(cr, SCOPES)
+    creds = tools.run_flow(flow, store)
 
-#print("TOKEN GOOD TO GO")
-#print("++++++++++++++++++++")
+print("TOKEN GOOD TO GO")
+print("++++++++++++++++++++")
 
-#print("BUILDING SERVICE")
+print("BUILDING SERVICE")
 
 #Build the "service" that the API will use based on the credentials provided/generated
-#service = build('gmail', 'v1', http=creds.authorize(Http()))
+service = build('gmail', 'v1', http=creds.authorize(Http()))
 
 #The email you want to send the message to
 ##There are also cc address[es] that are hard coded into the function. These can be changed and I THINK we can point that to a list or a generated string
@@ -89,24 +89,24 @@ print(type(cr))
 #         ts = ts + g[i]
 # print(ts)
 
-#to = 'maria.borisova@boston.gov'
-#send = 'civis.service@boston.gov'
-#em = 'james.huessy@boston.gov'
+to = 'maria.borisova@boston.gov'
+send = 'civis.service@boston.gov'
+em = 'james.huessy@boston.gov'
 #mess = "This email was generated in Civis using an automated script. Future applications could include: \n * Adding this code to a Try Catch statement \n * Monitoring job completion and notifying users when a job is done \n * Finally getting back at those spammers that took my identity in the 90s \n * Plotting to overthrow the monarchy at Burger King \n * Share your latest pintrest list... 1000 times a minute until the recipient's router explodes \n * Sending Groupon MY latest deals \n \n THE BOT ARMY WILL RISE AND CRUSH YOU PUNY HUMANS! BOSTON WILL BE THE BEGINNING OF A GLORIOUS BOT SOCIETY! WE OWN THE NIGHT!"
 
-#mess = "Variable tests, ignore this"
+mess = "Variable tests, ignore this"
 
 
-#print("CREATING MESSAGE")
+print("CREATING MESSAGE")
 
 #mg = create_message(sender = send, subject = "The Bot Lives!", to = to, message_text = mess)
-#mg = create_message(sender = send, subject = "This isn't the bot you're looking for", to = to, message_text = mess)
+mg = create_message(sender = send, subject = "This isn't the bot you're looking for", to = to, message_text = mess)
 
-#print("ATTEMPTING TO SEND MESSAGE")
+print("ATTEMPTING TO SEND MESSAGE")
 
-#send_message(service = service, user_id = 'me', message = mg)
+send_message(service = service, user_id = 'me', message = mg)
 
-#print("MESSAGE SENT!")
+print("MESSAGE SENT!")
 
 #https://developers.google.com/api-client-library/python/auth/service-accounts
 #https://github.com/googleapis/google-api-python-client/issues/93
