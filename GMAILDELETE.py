@@ -44,9 +44,9 @@ print("++++++++++++++++")
 SCOPES = 'https://mail.google.com/'
 #This will be the generated token.json file that was created in AUTH script
 #It needs to be in the working directory or at least called as an environmental variable
- store = file.Storage(os.environ['Token'])
+store = file.Storage(os.environ['Token'])
 #Get the value of the call
- creds = store.get()
+creds = store.get()
 
 print("READING IN TOKEN")
 
