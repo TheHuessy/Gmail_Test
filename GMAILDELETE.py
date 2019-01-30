@@ -73,7 +73,7 @@ print("++++++++++++++++++++")
 print("BUILDING SERVICE")
 
 #Build the "service" that the API will use based on the credentials provided/generated
-##service = build('gmail', 'v1', http=creds.authorize(Http()))
+service = build('gmail', 'v1', http=creds.authorize(Http()))
 
 #The email you want to send the message to
 ##There are also cc address[es] that are hard coded into the function. These can be changed and I THINK we can point that to a list or a generated string
@@ -105,7 +105,7 @@ mg = create_message(sender = send, subject = "This isn't the bot you're looking 
 
 print("ATTEMPTING TO SEND MESSAGE")
 
-##send_message(service = service, user_id = 'me', message = mg)
+send_message(service = service, user_id = 'me', message = mg)
 
 print("MESSAGE SENT!")
 
