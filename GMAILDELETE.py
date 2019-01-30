@@ -4,6 +4,7 @@ import base64
 #from email.mime.image import MIMEImage
 #from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 import mimetypes
 from googleapiclient.discovery import build
 import os
@@ -49,8 +50,8 @@ SCOPES = 'https://mail.google.com/'
 print("READING IN TOKEN")
 
 #creds = os.environ['Token']
-creds = '{"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "client_id": "276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "client_secret": "T4Nbt7shAsgx18mzhvj5buTa", "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "token_expiry": "2019-01-14T19:30:21Z", "token_uri": "https://www.googleapis.com/oauth2/v3/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "expires_in": 3600, "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "scope": "https://mail.google.com/", "token_type": "Bearer"}, "scopes": ["https://mail.google.com/"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"} String no'
-cr = '{ "installed":{ "client_id":"276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "project_id":"civis-error-emai-1547236114043", "auth_uri":"https://accounts.google.com/o/oauth2/auth", "token_uri":"https://www.googleapis.com/oauth2/v3/token", "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs", "client_secret":"T4Nbt7shAsgx18mzhvj5buTa", "redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"] } }'
+creds = json.loads('{"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "client_id": "276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "client_secret": "T4Nbt7shAsgx18mzhvj5buTa", "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "token_expiry": "2019-01-14T19:30:21Z", "token_uri": "https://www.googleapis.com/oauth2/v3/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "expires_in": 3600, "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "scope": "https://mail.google.com/", "token_type": "Bearer"}, "scopes": ["https://mail.google.com/"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"} String no')
+cr = json.loads('{ "installed":{ "client_id":"276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "project_id":"civis-error-emai-1547236114043", "auth_uri":"https://accounts.google.com/o/oauth2/auth", "token_uri":"https://www.googleapis.com/oauth2/v3/token", "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs", "client_secret":"T4Nbt7shAsgx18mzhvj5buTa", "redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"] } }')
 
 #Checking to make sure that the thing exists, if not, it prompts you to create it
 if not creds or creds.invalid:
