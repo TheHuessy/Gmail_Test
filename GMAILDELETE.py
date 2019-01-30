@@ -56,7 +56,7 @@ cr = json.loads('{"installed":{"client_id":"276507396456-neq8ort2b3541o8ak8b82su
 
 #Checking to make sure that the thing exists, if not, it prompts you to create it
 #if not creds or creds.invalid:
- if not creds:
+if not creds:
     print("NEED TO CHECK CREDENTIALS")
     #flow = client.flow_from_clientsecrets(os.environ['Credentials'], SCOPES)
     flow = client.flow_from_clientsecrets(cr, SCOPES)
