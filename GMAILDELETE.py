@@ -44,14 +44,16 @@ print("++++++++++++++++")
 SCOPES = 'https://mail.google.com/'
 #This will be the generated token.json file that was created in AUTH script
 #It needs to be in the working directory or at least called as an environmental variable
-store = file.Storage("os.environ['Token']")
+#store = file.Storage("os.environ['Token']")
 #Get the value of the call
-creds = store.get()
+#creds = store.get()
 
 print("READING IN TOKEN")
 
 #creds = os.environ['Token']
 #creds = json.loads(creds)
+g = os.path.dirname(os.environ['Token'])
+print(g)
 #print(type(creds))
 #print('++++++++++')
 #cr = os.environ['Credentials']
@@ -59,11 +61,11 @@ print("READING IN TOKEN")
 #print(type(cr))
 #Checking to make sure that the thing exists, if not, it prompts you to create it
 #if not creds or creds.invalid:
-if not creds:
-    print("NEED TO CHECK CREDENTIALS")
-    flow = client.flow_from_clientsecrets("os.environ['Credentials']", SCOPES)
-    #flow = client.flow_from_clientsecrets(cr, SCOPES)
-    creds = tools.run_flow(flow, store)
+#if not creds:
+#    print("NEED TO CHECK CREDENTIALS")
+#    #flow = client.flow_from_clientsecrets("os.environ['Credentials']", SCOPES)
+#    flow = client.flow_from_clientsecrets(cr, SCOPES)
+#    creds = tools.run_flow(flow, store)
 
 print("TOKEN GOOD TO GO")
 print("++++++++++++++++++++")
@@ -71,7 +73,7 @@ print("++++++++++++++++++++")
 print("BUILDING SERVICE")
 
 #Build the "service" that the API will use based on the credentials provided/generated
-service = build('gmail', 'v1', http=creds.authorize(Http()))
+##service = build('gmail', 'v1', http=creds.authorize(Http()))
 
 #The email you want to send the message to
 ##There are also cc address[es] that are hard coded into the function. These can be changed and I THINK we can point that to a list or a generated string
@@ -103,7 +105,7 @@ mg = create_message(sender = send, subject = "This isn't the bot you're looking 
 
 print("ATTEMPTING TO SEND MESSAGE")
 
-send_message(service = service, user_id = 'me', message = mg)
+##send_message(service = service, user_id = 'me', message = mg)
 
 print("MESSAGE SENT!")
 
