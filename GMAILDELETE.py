@@ -50,10 +50,10 @@ SCOPES = 'https://mail.google.com/'
 
 print("READING IN TOKEN")
 
-#creds = os.environ['Token']
-#creds = json.loads(creds)
-g = os.path.dirname(os.environ['Token'])
-print(g)
+creds = os.environ['Token']
+creds = json.loads(creds)
+
+
 #print(type(creds))
 #print('++++++++++')
 #cr = os.environ['Credentials']
@@ -61,11 +61,11 @@ print(g)
 #print(type(cr))
 #Checking to make sure that the thing exists, if not, it prompts you to create it
 #if not creds or creds.invalid:
-#if not creds:
-#    print("NEED TO CHECK CREDENTIALS")
-#    #flow = client.flow_from_clientsecrets("os.environ['Credentials']", SCOPES)
-#    flow = client.flow_from_clientsecrets(cr, SCOPES)
-#    creds = tools.run_flow(flow, store)
+if not creds:
+    print("NEED TO CHECK CREDENTIALS")
+    flow = client.flow_from_clientsecrets("os.environ['Credentials']", SCOPES)
+    #flow = client.flow_from_clientsecrets(cr, SCOPES)
+    creds = tools.run_flow(flow, creds)
 
 print("TOKEN GOOD TO GO")
 print("++++++++++++++++++++")
