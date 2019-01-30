@@ -44,14 +44,14 @@ print("++++++++++++++++")
 SCOPES = 'https://mail.google.com/'
 #This will be the generated token.json file that was created in AUTH script
 #It needs to be in the working directory or at least called as an environmental variable
-# store = file.Storage('token.json')
+ store = file.Storage(os.environ['Token'])
 #Get the value of the call
-# creds = store.get()
+ creds = store.get()
 
 print("READING IN TOKEN")
 
-creds = os.environ['Token']
-creds = json.loads(creds)
+#creds = os.environ['Token']
+#creds = json.loads(creds)
 #creds = json.loads('{"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "client_id": "276507396456-neq8ort2b3541o8ak8b82suonogi6csh.apps.googleusercontent.com", "client_secret": "T4Nbt7shAsgx18mzhvj5buTa", "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "token_expiry": "2019-01-14T19:30:21Z", "token_uri": "https://www.googleapis.com/oauth2/v3/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.GluRBrvDM-3BjTSbV6Q75YdsTvY__3h5HbY4Im5kIztvcCZ4r1wJl2ZJpAAxnlbxldk6q0uj7BIqbxaTGgudx9dv-FGWg8WOdcS7QslIvuRG-8CuiGb_RQcC381W", "expires_in": 3600, "refresh_token": "1/LjGQxPzlriepAOeXIGY-nwgIKHT4TVIkkRt0vromd6M", "scope": "https://mail.google.com/", "token_type": "Bearer"}, "scopes": ["https://mail.google.com/"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"}')
 #print(type(creds))
 #print('++++++++++')
