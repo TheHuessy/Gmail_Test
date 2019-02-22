@@ -1,11 +1,13 @@
-import base64
-from email.mime.text import MIMEText
 import mimetypes
-from googleapiclient.discovery import build
-import os
 from oauth2client import file, client, tools
-from httplib2 import Http
+import os
+from __future__ import print_function
+from googleapiclient.discovery import build
 from apiclient import errors
+from httplib2 import Http
+from email.mime.text import MIMEText
+import base64
+from google.oauth2 import service_account
 
 print("STARTING DEF 1")
 
