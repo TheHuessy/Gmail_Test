@@ -37,8 +37,9 @@ print("DEF 2 COMPLETE")
 print("STARTING DEF 3")
 
 def service_account_login():
+  JL = json.loads(str(os.environ['SERVICE_KEY']))
   SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-  SERVICE_ACCOUNT_FILE = os.environ['SERVICE_KEY']
+  SERVICE_ACCOUNT_FILE = JL
 
   credentials = service_account.Credentials.from_service_account_file(
           SERVICE_ACCOUNT_FILE, scopes=SCOPES)
