@@ -41,8 +41,8 @@ def service_account_login():
   SCOPES = ['https://www.googleapis.com/auth/gmail.send']
   SERVICE_ACCOUNT_FILE = JL
 
-  credentials = service_account.Credentials.from_service_account_file(
-          SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+  #credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+  credentials = service_account.Credentials.from_service_account_info(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
   delegated_credentials = credentials.with_subject(EMAIL_FROM)
   service = build('gmail', 'v1', credentials=delegated_credentials)
   return service
