@@ -52,11 +52,11 @@ print("++++++++++++++++")
 #                            SENDING AN EMAIL                                     #
 ###################################################################################
 
-## Using Service Account login to establish connection with API
+## Calling API
 
 service = service_account_login()
 
-## Setting up needed variables including the message as a string to be converted by the 'send_message' function
+## Setting up variables that will be passed to the 'send_message' function, including the message body as string
 
 EMAIL_FROM = 'civis.service@boston.gov'
 EMAIL_TO = 'maria.borisova@boston.gov'
@@ -65,9 +65,13 @@ EMAIL_CONTENT = 'Это тест скрипта gmail. Я полагаю, что
 
 print("CREATING MESSAGE")
 
+## Compiling the email
+
 message = create_message(EMAIL_FROM, EMAIL_TO, EMAIL_SUBJECT, EMAIL_CONTENT)
 
 print("ATTEMPTING TO SEND MESSAGE")
+
+## Sending the email
 
 send_message(service = service, user_id = 'me', message = mg)
 
