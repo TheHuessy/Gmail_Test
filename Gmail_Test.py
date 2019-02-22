@@ -12,7 +12,7 @@ from google.oauth2 import service_account
 
 
 
-def send_email(Email_subject, Email_body, Email_sender='ETLDevelopers@cityofboston.gov', Email_to='ETLDevelopers@cityofboston.gov', Email_cc=None, Email_bcc=None):
+def send_email(Email_subject, Email_body, Email_sender='civis.service@boston.gov', Email_to='civis.service@boston.gov', Email_cc=None, Email_bcc=None):
     # Pulling in the string value of the service key from the parameter
     # Convert to json object
     JL = json.loads(os.environ['SERVICE_KEY'])
