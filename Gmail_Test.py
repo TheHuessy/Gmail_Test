@@ -1,92 +1,78 @@
 from __future__ import print_function
-import mimetypes
-from oauth2client import file, client, tools
+#import mimetypes
 import os
 import json
+import base64
 from googleapiclient.discovery import build
 from apiclient import errors
-from httplib2 import Http
+#from httplib2 import Http
 from email.mime.text import MIMEText
-import base64
+#from oauth2client import file, client, tools
 from google.oauth2 import service_account
 
-print("STARTING DEF 1")
 
-def create_message(sender, to, subject, message_text):
-    message = MIMEText(message_text)
-    message['to'] = to
-    message['from'] = sender
-    message['subject'] = subject
-    #You can add cc's and [assuming] bcc's like this:
-    message['cc'] = 'james.huessy@boston.gov'
-    return {'raw': base64.urlsafe_b64encode(message.as_string().encode('UTF-8')).decode('ascii')}
 
-print("DEF 1 COMPLETE")
+def send_email(Email_subject, Email_body, Email_sender='ETLDevelopers@cityofboston.gov', Email_to='ETLDevelopers@cityofboston.gov', Email_cc=None, Email_bcc=None):
+    # Pulling in the string value of the service key from the parameter
+    # Convert to json object
+    JL = json.loads(os.environ['SERVICE_KEY'])
 
-print("STARTING DEF 2")
 
-def send_message(service, user_id, message):
+    # Define which scopes we're trying to access
+    # The service account we have set up is only authorized for gmail.send
+    # If we want to grant it more access, we will have to ask Patrick Collins very nicely
+    SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+    # Passing the json'd string to this object
+    SERVICE_ACCOUNT_INFO = JL
+    # Setting up credentials using the gmail api
+    credentials = service_account.Credentials.from_service_account_info(SERVICE_ACCOUNT_INFO, scopes=SCOPES)
+    # This allows us to assign an alias account to the message so that the messages aren't coming from 'ServiceDriod-8328balh blah blah'
+    delegated_credentials = credentials.with_subject(Email_sender)
+    # 'Building' the service instance using the credentials we've passed
+    service = build('gmail', 'v1', credentials=delegated_credentials)
+    
+
+    # Building out the email
+    message = MIMEText(Email_body)
+    message['to'] = Email_to
+    message['from'] = Email_sender
+    message['subject'] = Email_subject
+    # If there are CCs or BCCs provided, then they will be parsed into the right format
+    if Email_cc:
+        ts = str()
+        for i in range(len(Email_cc)):
+            if i == 0:
+                ts = ts + Email_cc[i] + ', '
+            elif i != (len(Email_cc)-1):
+                ts = ts + Email_cc[i] + ', '
+            else:
+                ts = ts + Email_cc[i]
+        message['cc'] = ts
+    if Email_bcc:
+        bts = str()
+        for i in range(len(Email_bcc)):
+            if i == 0:
+                bts = bts + Email_bcc[i] + ', '
+            elif i != (len(Email_bcc)-1):
+                bts = bts + Email_bcc[i] + ', '
+            else:
+                bts = bts + Email_bcc[i]
+        message['bcc'] = bts
+    # This is important. Tutorials will just have you output as base64, but, for whatever reason, one needs to explicitly encode to UTF-8 and then call the decode to ascii
+    email = {'raw': base64.urlsafe_b64encode(message.as_string().encode('UTF-8')).decode('ascii')}
+
+
+
+    ## Function to actually send the message using the API
     try:
-        message = (service.users().messages().send(userId=user_id, body=message).execute())
-        print('Message Id: %s' % message['id'])
-        return message
+        message = (service.users().messages().send(userId='me', body=email).execute())
+        print('Message Id: %s' % message['id'])        
     except errors.HttpError as error:
         print('An error occurred: %s' % error)
 
-print("DEF 2 COMPLETE")
-
-print("STARTING DEF 3")
-
-def service_account_login():
-  JL = json.loads(str(os.environ['SERVICE_KEY']))
-  SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-  SERVICE_ACCOUNT_FILE = JL
-
-  #credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-  credentials = service_account.Credentials.from_service_account_info(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-  delegated_credentials = credentials.with_subject(EMAIL_FROM)
-  service = build('gmail', 'v1', credentials=delegated_credentials)
-  return service
-
-print("DEF 3 COMPLETE")
-
-print("DEF SECTION COMPLETE")
-print("++++++++++++++++")
-###################################################################################
-#                            SENDING AN EMAIL                                     #
-###################################################################################
+send_email(Email_to = "james.huessy@boston.gov", Email_subject = "Import Test", Email_body = "If this worked, then we have eliminated a few packages. \nYay!")
 
 
-
-## Setting up variables that will be passed to the 'send_message' function, including the message body as string
-
-EMAIL_FROM = 'civis.service@boston.gov'
-EMAIL_TO = 'maria.borisova@boston.gov'
-EMAIL_SUBJECT = 'Доброжелательная диктатура'
-EMAIL_CONTENT = 'Это тест скрипта gmail. Я полагаю, что если DHS или какое-либо другое мониторинговое агентство посмотрит на это, оно их напугает.\nПриветствую наступающие Соединенные Штаты Бостона'
-
-## Calling API
-
-service = service_account_login()
-
-
-print("CREATING MESSAGE")
-
-## Compiling the email
-
-message = create_message(EMAIL_FROM, EMAIL_TO, EMAIL_SUBJECT, EMAIL_CONTENT)
-
-print("ATTEMPTING TO SEND MESSAGE")
-
-## Sending the email
-
-sent = send_message(service,'me', message)
-
-print("MESSAGE SENT!")
-
-#https://developers.google.com/api-client-library/python/auth/service-accounts
-#https://github.com/googleapis/google-api-python-client/issues/93
-#https://stackoverflow.com/questions/32136330/where-do-i-get-the-authorized-gmail-api-service-instance-python-gmail-api
 
 
 
