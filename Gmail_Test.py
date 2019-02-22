@@ -1,8 +1,4 @@
 import base64
-#from email.mime.audio import MIMEAudio
-#from email.mime.base import MIMEBase
-#from email.mime.image import MIMEImage
-#from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import mimetypes
 from googleapiclient.discovery import build
@@ -22,6 +18,8 @@ def create_message(sender, to, subject, message_text):
     message['cc'] = 'james.huessy@boston.gov'
     return {'raw': base64.urlsafe_b64encode(message.as_string().encode('UTF-8')).decode('ascii')}
 
+print("DEF 1 COMPLETE")
+
 print("STARTING DEF 2")
 
 def send_message(service, user_id, message):
@@ -32,60 +30,42 @@ def send_message(service, user_id, message):
     except errors.HttpError as error:
         print('An error occurred: %s' % error)
 
-print("DEF COMPLETE")
+print("DEF 2 COMPLETE")
+
+print("STARTING DEF 3")
+
+def service_account_login():
+  SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+  SERVICE_ACCOUNT_FILE = os.environ['SERVICE_KEY']
+
+  credentials = service_account.Credentials.from_service_account_file(
+          SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+  delegated_credentials = credentials.with_subject(EMAIL_FROM)
+  service = build('gmail', 'v1', credentials=delegated_credentials)
+  return service
+
+print("DEF 3 COMPLETE")
+
+print("DEF SECTION COMPLETE")
 print("++++++++++++++++")
 ###################################################################################
 #                            SENDING AN EMAIL                                     #
 ###################################################################################
 
-#This tells the API which API platform you're trying to access
-SCOPES = 'https://mail.google.com/'
-#This will be the generated token.json file that was created in AUTH script
-#It needs to be in the working directory or at least called as an environmental variable
-# store = file.Storage('token.json')
-#Get the value of the call
-# creds = store.get()
+## Using Service Account login to establish connection with API
 
-print("READING IN TOKEN")
+service = service_account_login()
 
-creds = os.environ['Token']
-#Checking to make sure that the thing exists, if not, it prompts you to create it
-if not creds or creds.invalid:
-    print("NEED TO CHECK CREDENTIALS")
-    flow = client.flow_from_clientsecrets(os.environ['Credentials'], SCOPES)
-    creds = tools.run_flow(flow, store)
+## Setting up needed variables including the message as a string to be converted by the 'send_message' function
 
-print("TOKEN GOOD TO GO")
-print("++++++++++++++++++++")
-
-print("BUILDING SERVICE")
-
-#Build the "service" that the API will use based on the credentials provided/generated
-service = build('gmail', 'v1', http=creds.authorize(Http()))
-
-#The email you want to send the message to
-##There are also cc address[es] that are hard coded into the function. These can be changed and I THINK we can point that to a list or a generated string
-
-##To add multiple emails in a list object to the to or cc fields use the following code, assuming 
-##that 'g' is the list with the emails and ts is the string object to pass to the 'to' argument in send_message():
-# ts = str()
-# for i in range(len(g)):
-#     if i == 0:
-#         ts = ts + g[i] + ', '
-#     elif i != (len(g)-1):
-#         ts = ts + g[i] + ', '
-#     else:
-#         ts = ts + g[i]
-# print(ts)
-
-to = 'maria.borisova@boston.gov'
-send = 'civis.service@boston.gov'
-#em = 'james.huessy@boston.gov'
-mess = "This email was generated in Civis using an automated script. Future applications could include: \n * Adding this code to a Try Catch statement \n * Monitoring job completion and notifying users when a job is done \n * Finally getting back at those spammers that took my identity in the 90s \n * Plotting to overthrow the monarchy at Burger King \n * Share your latest pintrest list... 1000 times a minute until the recipient's router explodes \n * Sending Groupon MY latest deals \n \n THE BOT ARMY WILL RISE AND CRUSH YOU PUNY HUMANS! BOSTON WILL BE THE BEGINNING OF A GLORIOUS BOT SOCIETY! WE OWN THE NIGHT!"
+EMAIL_FROM = 'civis.service@boston.gov'
+EMAIL_TO = 'maria.borisova@boston.gov'
+EMAIL_SUBJECT = 'Доброжелательная диктатура'
+EMAIL_CONTENT = 'Это тест скрипта gmail. Я полагаю, что если DHS или какое-либо другое мониторинговое агентство посмотрит на это, оно их напугает.\nПриветствую наступающие Соединенные Штаты Бостона'
 
 print("CREATING MESSAGE")
 
-mg = create_message(sender = send, subject = "The Bot Lives!", to = to, message_text = mess)
+message = create_message(EMAIL_FROM, EMAIL_TO, EMAIL_SUBJECT, EMAIL_CONTENT)
 
 print("ATTEMPTING TO SEND MESSAGE")
 
