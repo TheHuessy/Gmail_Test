@@ -56,9 +56,7 @@ print("++++++++++++++++")
 #                            SENDING AN EMAIL                                     #
 ###################################################################################
 
-## Calling API
 
-service = service_account_login()
 
 ## Setting up variables that will be passed to the 'send_message' function, including the message body as string
 
@@ -66,6 +64,11 @@ EMAIL_FROM = 'civis.service@boston.gov'
 EMAIL_TO = 'maria.borisova@boston.gov'
 EMAIL_SUBJECT = 'Доброжелательная диктатура'
 EMAIL_CONTENT = 'Это тест скрипта gmail. Я полагаю, что если DHS или какое-либо другое мониторинговое агентство посмотрит на это, оно их напугает.\nПриветствую наступающие Соединенные Штаты Бостона'
+
+## Calling API
+
+service = service_account_login()
+
 
 print("CREATING MESSAGE")
 
