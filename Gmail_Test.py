@@ -80,7 +80,7 @@ print("ATTEMPTING TO SEND MESSAGE")
 
 ## Sending the email
 
-send_message(service = service, user_id = 'me', message = mg)
+sent = send_message(service,'me', message)
 
 print("MESSAGE SENT!")
 
