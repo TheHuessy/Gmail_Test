@@ -1,13 +1,9 @@
-#from __future__ import print_function
-#import mimetypes
 import os
 import json
 import base64
 from googleapiclient.discovery import build
 from apiclient import errors
-#from httplib2 import Http
 from email.mime.text import MIMEText
-#from oauth2client import file, client, tools
 from google.oauth2 import service_account
 
 
@@ -70,7 +66,8 @@ def send_email(Email_subject, Email_body, Email_sender='civis.service@boston.gov
     except errors.HttpError as error:
         print('An error occurred: %s' % error)
 
-send_email(Email_to = "james.huessy@boston.gov", Email_subject = "Import Test", Email_body = "If this worked, then we have eliminated a few packages. \nYay!")
+## To test, uncomment below and run
+#send_email(Email_to = "james.huessy@boston.gov", Email_subject = "Import Test", Email_body = "If this worked, then we have eliminated a few packages. \nYay!")
 
 
 
